@@ -21,7 +21,8 @@ shopt -s checkwinsize
 case "$TERM" in
 xterm-color)
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w$(__git_ps1 " (%s)")\[\033[00m\]\$ '
+    #PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
     ;;
 *)
     PS1='\u@\h:\w\$ '
@@ -33,7 +34,8 @@ esac
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    #PROMPT_COMMAND='echo -ne "\033]0;${HOSTNAME}: ${PWD/$HOME/~}\007"'
+    PROMPT_COMMAND='echo -ne "\033]0;${TABNAME+${TABNAME}: }${PWD/$HOME/~}\007"'
     ;;
 *)
     ;;
@@ -69,3 +71,30 @@ fi
 #if [ -f /etc/bash_completion ]; then
 #    . /etc/bash_completion
 #fi
+if [ -f /opt/local/etc/bash_completion ]; then
+      . /opt/local/etc/bash_completion
+fi
+
+
+source /opt/local/share/doc/git-core/contrib/completion/git-completion.bash
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+
+PATH=$PATH:~/bin
+export EDITOR=vim
+
+pman()
+{
+    man -t $1 | open -f -a /Applications/Preview.app
+}
+
+alias ldd='printf "Sending command to \'\''otool -L\'\'' --\n" && otool -L'
+
+alias find_sysconf="~/source/qa/investigate/find_sysconf.py"
+alias fh="find_sysconf host"
+alias fs="find_sysconf system"
+
+alias t="cd ~/source/qa/tlib"
+alias less="less -fR"
+
