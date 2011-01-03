@@ -78,11 +78,16 @@ fi
 
 source /opt/local/share/doc/git-core/contrib/completion/git-completion.bash
 export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
+#export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
+#export GIT_PS1_SHOWUPSTREAM="auto"
+
+# completions
+complete -f -X '!*.db' sqlite3
 
 PATH=$PATH:~/bin
-export EDITOR=vim
+export EDITOR='mvim --remote-wait-silent'
+alias e='mvim --remote-silent'
 
 pman()
 {
@@ -98,3 +103,29 @@ alias fs="find_sysconf system"
 alias t="cd ~/source/qa/tlib"
 alias less="less -fR"
 
+
+SYSTEM=qa13a
+alias runner_succeed="runner -s $SYSTEM -o plugins.event_rules.enabled=no source/experiments/tests/succeed.py"
+alias interact="runner -s $SYSTEM -o plugins.event_rules.enabled=no source/qa/tlib/tests/interactive.py"
+alias runner_hosts="runner -s $SYSTEM -o plugins.event_rules.enabled=no source/qa/tlib/tests/examples/hosts.py:HostExample"
+#alias copy_log="scp pro103:/qa/tlib/logs/by_user/gavriep/last_test/suite/cli_log.db source/qa/tlib/tmp/cli_log_id.db"
+alias copy_db="scp pro103:/qa/tlib/logs/by_user/gavriep/last_test/suite/cli_log.db ~/source/qa/tlib/tmp/"
+alias p4merge=/Applications/p4merge.app/Contents/MacOS/p4merge
+export PYTHONPATH=~/source/qa/tlib/deps:/Users/gavriep/source/pydev/pysrc
+#alias pip=pip-2.7
+alias json='python -m json.tool'
+alias sqlite_version="python -c 'import sqlite3; print sqlite3.version, sqlite3.sqlite_version'"
+
+q()
+{
+    time sqlite3 tmp/cli_log.db "$1"
+}
+eqp()
+{
+    time sqlite3 tmp/cli_log.db "explain query plan $1"
+}
+
+# sshfs gavriep@pro103:/a/home /mnt/host/a/home 
+# sshfs gavriep@pro103:/qa /mnt/host/qa
+
+export PYTHONSTARTUP=~/.pythonrc.py
