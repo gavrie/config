@@ -39,10 +39,12 @@ unsetopt correct_all
 # Make ^R search history even in vi-mode
 bindkey '^R' history-incremental-search-backward
 bindkey '^S' history-incremental-search-forward
-bindkey "^P" vi-up-line-or-history
-bindkey "^N" vi-down-line-or-history
+bindkey "^P" up-line-or-history
+bindkey "^N" down-line-or-history
 bindkey "^[[A" up-line-or-history
 bindkey "^[[B" down-line-or-history
+bindkey "^[OA" up-line-or-history
+bindkey "^[OB" down-line-or-history
 
 #export PYTHONPATH=~/source/qa/tlib/deps
 #export PYTHONPATH=/local/gavriep/p11.0/leia/common/pypackages
