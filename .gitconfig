@@ -12,9 +12,13 @@
     ignorecase = true
     excludesfile = ~/.gitignore
     quotepath = false
+	autocrlf = input
 
 [push]
     default = tracking
+
+[pull]
+	rebase = true
 
 [merge]
     tool = p4merge
@@ -31,7 +35,7 @@
 [diff]
     tool = p4merge
     mnemonicprefix = true
-    renames = true
+	renames = true
 [difftool]
     prompt = no
 [difftool.p4merge]
