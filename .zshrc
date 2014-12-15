@@ -25,7 +25,7 @@ ZSH_THEME="gavrie"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode python osx)
+plugins=(git vi-mode python osx zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -50,6 +50,8 @@ bindkey "^[OB" down-line-or-history
 #export PYTHONPATH=/local/gavriep/p11.0/leia/common/pypackages
 export PYTHONSTARTUP=~/.pythonrc.py
 
+export GOPATH=~/source/go
+
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 if [ $(uname -s) = 'Darwin' ]
@@ -59,10 +61,12 @@ then
     #export PATH="/opt/local/bin:$PATH"
     export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
+    alias investigate='workon tlib && ~/source/qa/tlib/utils/bin/investigate'
+
     alias e='mvim --remote-silent'
     alias ldd='printf "Sending command to \'\''otool -L\'\'' --\n" && otool -L'
 
-    alias p4merge='/Applications/p4merge.app/Contents/MacOS/p4merge'
+    # alias p4merge='/Applications/p4merge.app/Contents/MacOS/p4merge'
     alias ls='ls -G'
 
     alias ubuntu-start='VBoxManage startvm "Ubuntu 11.04 i386"'
@@ -97,15 +101,18 @@ else
     then
         source /usr/local/bin/virtualenvwrapper.sh
     fi
+
+    # Workaround for broken `getent passwd` on Ubuntu hosts
+    zstyle ':completion:*' users off
 fi
 
 export VISUAL=$EDITOR
-export PATH=~/bin:$PATH:/usr/local/bin
-export LESS="-fR"
+export PATH=~/bin:$PATH:/usr/local/bin:$GOPATH/bin
+export LESS="-fRXF"
 
 alias fh='find_sysconf host'
 alias fs='find_sysconf system'
-alias find_sysconf='~/source/qa/investigate/find_sysconf.py'
+alias find_sysconf='~/source/qa/tlib/investigate/find_sysconf.py'
 
 alias grep='grep --color=auto'
 
@@ -120,7 +127,9 @@ venv() {
 }
 
 tlib=~/source/qa/tlib
+tests=~/source/qa/tests
 xagent=~/source/qa/tlib/deps/xagent
+cura=~/source/pyside/curatron-tng
 
 if [ -e ~/.flickr ]
 then
@@ -128,8 +137,9 @@ then
 fi
 
 # rbenv
-if which rbenv > /dev/null
+if type rbenv > /dev/null
 then
     PATH="$HOME/.rbenv/bin:$PATH"
     eval "$(rbenv init -)"
 fi
+

@@ -51,4 +51,3 @@
     lgp = log -p
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%aN%Creset' --abbrev-commit --date=relative
 
-    review = notes add -m 'Reviewed-by: Gavrie Philipson <gavriep@il.ibm.com>'
