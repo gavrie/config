@@ -5,3 +5,4 @@ ln -sf config/.inputrc ~
 ln -sf config/.pythonrc.py ~
 ln -sf config/.tmux.conf ~
 ln -sf config/.zshrc ~
+ln -sf ../../config/gavrie.zsh-theme ~/.oh-my-zsh/themes
