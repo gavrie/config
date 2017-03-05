@@ -1,5 +1,6 @@
 [user]
     name = Gavrie Philipson
+    email = gavrie@philipson.co.il
 
 [color]
     ui = auto
@@ -65,12 +66,12 @@
     sling = !git fetch && git remote prune origin && git branch -r|grep sling/proposed
 
     # Google code review, using golang.org/x/review/git-codereview
-	change = codereview change
-	gofmt = codereview gofmt
-	mail = codereview mail
-	pending = codereview pending
-	submit = codereview submit
-	sync = codereview sync
+    change = codereview change
+    gofmt = codereview gofmt
+    mail = codereview mail
+    pending = codereview pending
+    submit = codereview submit
+    sync = codereview sync
 
 [credential]
     helper = cache --timeout=3600
@@ -79,10 +80,10 @@
     follow = true
 
 [http]
-	cookiefile = /Users/gavriep/.gitcookies
+    cookiefile = /Users/gavriep/.gitcookies
 
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    clean = git-lfs clean -- %f
