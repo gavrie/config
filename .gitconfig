@@ -64,8 +64,19 @@
     delete-rejected = !/Users/gavriep/source/elastifile/git-sling/git-delete-sling-branch.sh rejected
     sling = !git fetch && git remote prune origin && git branch -r|grep sling/proposed
 
+    # Google code review, using golang.org/x/review/git-codereview
+	change = codereview change
+	gofmt = codereview gofmt
+	mail = codereview mail
+	pending = codereview pending
+	submit = codereview submit
+	sync = codereview sync
+
 [credential]
     helper = cache --timeout=3600
 
 [log]
     follow = true
+
+[http]
+	cookiefile = /Users/gavriep/.gitcookies
