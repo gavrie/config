@@ -25,7 +25,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode python osx zsh-syntax-highlighting)
+plugins=(git vi-mode python osx zsh-syntax-highlighting docker poetry)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -47,9 +47,9 @@ bindkey "^[[B" down-line-or-history
 bindkey "^[OA" up-line-or-history
 bindkey "^[OB" down-line-or-history
 
-#export PYTHONPATH=~/source/qa/tlib/deps
-#export PYTHONPATH=/local/gavriep/p11.0/leia/common/pypackages
 export PYTHONSTARTUP=~/.pythonrc.py
+
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
 export GOPATH=~/source/go
 
@@ -58,32 +58,32 @@ export GOPATH=~/source/go
 if [ $(uname -s) = 'Darwin' ]
 then
     # Mac-specific stuff
-    export EDITOR='mvim --remote-wait-silent'
+    export EDITOR=vim #'mynvr --remote-wait-silent'
     #export PATH="/opt/local/bin:$PATH"
     export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 
-    alias investigate='workon tlib && ~/source/qa/tlib/utils/bin/investigate'
-
-    alias e='mvim --remote-silent'
+    alias e=vim #'mynvr --remote-silent'
     alias ldd='printf "Sending command to \'\''otool -L\'\'' --\n" && otool -L'
 
     # alias p4merge='/Applications/p4merge.app/Contents/MacOS/p4merge'
     alias ls='ls -G'
 
-    alias ubuntu-start='VBoxManage startvm "Ubuntu 11.04 i386"'
-    alias ubuntu-stop='VBoxManage controlvm "Ubuntu 11.04 i386" savestate'
-
     # Font smoothing with subpixel antialiasing
-    #alias smooth="defaults -currentHost write -globalDomain AppleFontSmoothing -int 2"
-    alias smooth="defaults -currentHost delete -globalDomain AppleFontSmoothing"
-    alias unsmooth="defaults -currentHost write -globalDomain AppleFontSmoothing -int 0"
-
-    export WORKON_HOME=~/.virtualenvs
-    source /usr/local/bin/virtualenvwrapper_lazy.sh
+    ##alias smooth="defaults -currentHost write -globalDomain AppleFontSmoothing -int 2"
+    #alias smooth="defaults -currentHost delete -globalDomain AppleFontSmoothing"
+    #alias unsmooth="defaults -currentHost write -globalDomain AppleFontSmoothing -int 0"
 
     # brew autocomplete
     fpath=($HOME/.zsh/func $fpath)
     typeset -U fpath
+
+    # Kube-PS1 prompt
+    source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+    PS1='$(kube_ps1)'$PS1
+
+    # Google Cloud SDK
+    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
 else
     # Non-mac stuff
     export EDITOR='vim'
@@ -107,13 +107,11 @@ else
     zstyle ':completion:*' users off
 fi
 
-export VISUAL=$EDITOR
-export PATH=~/bin:$PATH:/usr/local/bin:$GOPATH/bin
-export LESS="-fRXF"
+source /usr/local/bin/virtualenvwrapper.sh
 
-alias fh='find_sysconf host'
-alias fs='find_sysconf system'
-alias find_sysconf='~/source/qa/tlib/investigate/find_sysconf.py'
+export VISUAL=$EDITOR
+export PATH=~/bin:/usr/local/opt/python/libexec/bin:$PATH:/usr/local/bin:$GOPATH/bin:~/source/flutter/flutter/bin
+export LESS="-fRXF"
 
 alias grep='grep --color=auto'
 
@@ -123,19 +121,7 @@ alias gsu='git submodule update --init --recursive'
 
 alias json='python -m json.tool'
 
-venv() {
-    . /a/opt/virtualenvs/python2.7/per-os/ubuntu-$(lsb_release -rs)/$1/bin/activate
-}
-
-tlib=~/source/qa/tlib
-tests=~/source/qa/tests
-xagent=~/source/qa/tlib/deps/xagent
-cura=~/source/pyside/curatron-tng
-
-if [ -e ~/.flickr ]
-then
-    source ~/.flickr
-fi
+alias prs='hub pr list -f "%sC%>(8)%i%Creset %<(10)[%au] %t%  l%n"'
 
 # rbenv
 if type rbenv > /dev/null
@@ -144,3 +130,10 @@ then
     eval "$(rbenv init -)"
 fi
 
+# pyenv
+#export PYENV_VIRTUALENV_DISABLE_PROMPT=0
+#eval "$(pyenv init -)"
+#eval "$(pyenv virtualenv-init -)"
+
+#export PATH="/usr/local/opt/llvm/bin:$PATH"
+export LLVM_CONFIG_PATH=/usr/local/opt/llvm/bin/llvm-config

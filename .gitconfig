@@ -1,6 +1,6 @@
 [user]
     name = Gavrie Philipson
-    email = gavrie@philipson.co.il
+	email = gavrie@philipson.co.il
 
 [color]
     ui = auto
@@ -36,6 +36,7 @@
     # tool = p4merge
     mnemonicprefix = true
     renames = true
+	noprefix = true
 [difftool]
     prompt = no
 [difftool.p4merge]
@@ -47,6 +48,7 @@
 [alias]
     lgp = log -p
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%aN%Creset' --abbrev-commit --date=relative
+    lgg = log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)%aN%Creset' --abbrev-commit --date=relative
     lgd = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci, %cr) %C(bold blue)%aN%Creset' --abbrev-commit --date=relative
     ; lgx= log --color --pretty=format:'%C(auto)%h %Cred %<(10,trunc)%an %Creset%C(auto)%s %Cgreen(%cr,%ar) %Creset%C(auto)%d' 
 

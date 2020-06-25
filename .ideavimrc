@@ -1,0 +1,9 @@
+set incsearch
+set hlsearch
+set surround
+set multiple-cursors
+set visualbell
+inoremap jj <Esc>
+nmap ,/ :nohlsearch<CR>
+set clipboard+=unnamed
+"set clipboard+=ideaput
