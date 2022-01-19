@@ -25,7 +25,7 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git vi-mode python osx zsh-syntax-highlighting docker poetry)
+plugins=(git vi-mode python macos zsh-syntax-highlighting docker poetry)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -47,7 +47,11 @@ bindkey "^[[B" down-line-or-history
 bindkey "^[OA" up-line-or-history
 bindkey "^[OB" down-line-or-history
 
-export PYTHONSTARTUP=~/.pythonrc.py
+PYTHONSTARTUP=~/.pythonrc.py
+if [ -e $PYTHONSTARTUP ]
+then
+    export PYTHONSTARTUP
+fi
 
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 
@@ -78,12 +82,8 @@ then
     typeset -U fpath
 
     # Kube-PS1 prompt
-    source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
-    PS1='$(kube_ps1)'$PS1
-
-    # Google Cloud SDK
-    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-    source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+    #source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+    #PS1='$(kube_ps1)'$PS1
 else
     # Non-mac stuff
     export EDITOR='vim'
@@ -98,19 +98,13 @@ else
     parse_git_dirty() {
         echo "$ZSH_THEME_GIT_PROMPT_CLEAN"
     }
-    if [ -e /usr/local/bin/virtualenvwrapper.sh ]
-    then
-        source /usr/local/bin/virtualenvwrapper.sh
-    fi
 
     # Workaround for broken `getent passwd` on Ubuntu hosts
     zstyle ':completion:*' users off
 fi
 
-source /usr/local/bin/virtualenvwrapper.sh
-
 export VISUAL=$EDITOR
-export PATH=~/bin:/usr/local/opt/python/libexec/bin:$PATH:/usr/local/bin:$GOPATH/bin:~/source/flutter/flutter/bin
+export PATH=~/bin:$PATH
 export LESS="-fRXF"
 
 alias grep='grep --color=auto'
@@ -121,8 +115,6 @@ alias gsu='git submodule update --init --recursive'
 
 alias json='python -m json.tool'
 
-alias prs='hub pr list -f "%sC%>(8)%i%Creset %<(10)[%au] %t%  l%n"'
-
 # rbenv
 if type rbenv > /dev/null
 then
@@ -130,10 +122,13 @@ then
     eval "$(rbenv init -)"
 fi
 
-# pyenv
-#export PYENV_VIRTUALENV_DISABLE_PROMPT=0
-#eval "$(pyenv init -)"
-#eval "$(pyenv virtualenv-init -)"
-
 #export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LLVM_CONFIG_PATH=/usr/local/opt/llvm/bin/llvm-config
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# poetry
+export PATH="$HOME/.local/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
