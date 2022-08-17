@@ -1,6 +1,5 @@
 [user]
     name = Gavrie Philipson
-	email = gavrie@philipson.co.il
 
 [color]
     ui = auto
@@ -88,7 +87,7 @@
     clean = git-lfs clean -- %f
 
 [init]
-	defaultBranch = master
+    defaultBranch = master
 
 [rerere]
-	enabled = false
+    enabled = false
