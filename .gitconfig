@@ -31,19 +31,29 @@
     trustExitCode = false
     keepBackup = false
     ; path = ~/bin/p4merge
+[mergetool.code]
+    cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
 
 [diff]
-    # tool = p4merge
+    tool = p4merge
+    # tool = difft
     mnemonicprefix = true
     renames = true
-	noprefix = true
+    noprefix = true
 [difftool]
     prompt = no
 [difftool.p4merge]
     cmd = p4merge "$LOCAL" "$REMOTE"
+[difftool "difft"]
+    cmd = difft "$LOCAL" "$REMOTE"
+
 
 [diff "xml"]
     command = xmldiff
+
+# Use a pager for large output, just like other git commands.
+[pager]
+        difftool = true
 
 [alias]
     lgp = log -p
@@ -62,19 +72,6 @@
     unignore = update-index --no-skip-worktree
     ignored = !git ls-files -v | grep "^S"
 
-    propose = !/Users/gavriep/source/elastifile/git-sling/git-propose.sh
-    unpropose = !/Users/gavriep/source/elastifile/git-sling/git-delete-sling-branch.sh proposed
-    delete-rejected = !/Users/gavriep/source/elastifile/git-sling/git-delete-sling-branch.sh rejected
-    sling = !git fetch && git remote prune origin && git branch -r|grep sling/proposed
-
-    # Google code review, using golang.org/x/review/git-codereview
-    change = codereview change
-    gofmt = codereview gofmt
-    mail = codereview mail
-    pending = codereview pending
-    submit = codereview submit
-    sync = codereview sync
-
 [credential]
     helper = cache --timeout=3600
 
@@ -89,5 +86,9 @@
     process = git-lfs filter-process
     required = true
     clean = git-lfs clean -- %f
+
 [init]
 	defaultBranch = master
+
+[rerere]
+	enabled = false
