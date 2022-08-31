@@ -7,11 +7,17 @@
     quotepath = false
     autocrlf = input
 
+[init]
+    defaultBranch = main
+
+[rerere]
+    enabled = true
+
 [push]
     default = simple
 
 [pull]
-    rebase = true
+	rebase = true
 
 [rebase]
     autosquash = true
@@ -47,9 +53,8 @@
 [diff "xml"]
     command = xmldiff
 
-# Use a pager for large output, just like other git commands.
 [pager]
-        difftool = true
+    difftool = true
 
 [alias]
     lgp = log -p
@@ -82,9 +87,3 @@
     process = git-lfs filter-process
     required = true
     clean = git-lfs clean -- %f
-
-[init]
-    defaultBranch = master
-
-[rerere]
-    enabled = false
